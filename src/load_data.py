@@ -12,7 +12,7 @@ def load_data(file_name: str):
         'saccade_duration', 'saccade_dispersion', 'saccade_velocity',
         'saccade_amplitude']
     for column in serial_columns:
-        data[column] = data[column].apply(lambda x: x[1:-1].split(','))
+        data[column] = data[column].apply(lambda x: x[1:-1].split(','))     
     return data
 
 

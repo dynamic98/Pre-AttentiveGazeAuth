@@ -1,5 +1,6 @@
 import itertools
 import numpy as np
+import math
 from sklearn.metrics import confusion_matrix, f1_score, accuracy_score, precision_score, ConfusionMatrixDisplay
 from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
@@ -8,6 +9,8 @@ from tqdm import tqdm
 import os
 import re
 import cv2
+from stimuli.util import cartesian
+import statistics
 
 import logging
 
@@ -43,8 +46,8 @@ def average(datalist):
         return 0
 
 def stack_ydata_from_same(y_data, stack):
-    # 일단 들어온 y_data를 label dict에 할당시켜줌
-    # stack으로 묶을 때 label이 같은 것끼리 묶어야 하기 때문임
+    # Allocate y_data to label dictionary
+    # to stack by same label
 
     label_dict = {k:[] for k in list(set(y_data))}
     for index,label in enumerate(y_data):
@@ -386,6 +389,20 @@ def accuracyMeasurement(confusionMatrix):
         diagonalValue += confusionMatrix[i,i]
     return diagonalValue/totalValue
 
+def statistic_calculation(data:list):
+    data = [x for x in data if x!='']
+    data = list(map(float, data))
+    data = [x for x in data if math.isnan(x) == False]
+    if len(data) == 0:
+        return [np.nan, np.nan, np.nan, np.nan]
+    elif len(data) == 1:
+        return [data[0],0,data[0],data[0]]
+    else:
+        mean_value = statistics.mean(data)
+        std_value = statistics.stdev(data)
+        max_value = max(data)
+        min_value = min(data)
+        return [mean_value, std_value, max_value, min_value]
 
 
 if __name__ == '__main__':
