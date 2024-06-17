@@ -15,7 +15,7 @@
 
 ---
 ### 3. Data Collection Envs
-<img width="800" alt="스크린샷 2024-06-17 오후 4 07 07" src="https://g ithub.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/b8193ea3-65db-4011-a901-615a7ade6239">
+<img width="800" alt="스크린샷 2024-06-17 오후 4 07 07" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/99e41256-74f8-4690-a394-c927af37ab05">
 
 
 ---
