@@ -9,8 +9,9 @@ from tqdm import tqdm
 import os
 import re
 import cv2
-from stimuli.util import cartesian
 import statistics
+
+from .stimuli.util import cartesian
 
 import logging
 

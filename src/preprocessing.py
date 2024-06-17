@@ -2,8 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
-from load_data import load_data
-from ML_util import statistic_calculation
+from .ML_util import statistic_calculation
 
 def data_preprocessing(data: pd.DataFrame):
     data_x = pd.DataFrame(data['x'].tolist(), columns=naming_columns("x", 84))
@@ -75,6 +74,4 @@ def z_score_normalization(data: pd.DataFrame):
     return normalized_data
 
 if __name__ == "__main__":
-    data = load_data("MVC_processed.tsv")
-    data = data_preprocessing(data)
-    data.head().to_csv("MVC_processed_preprocessed.tsv", sep='\t', index=False)
+    pass

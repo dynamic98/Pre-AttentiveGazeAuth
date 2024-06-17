@@ -17,5 +17,4 @@ def load_data(file_name: str):
 
 
 if __name__ == "__main__":
-    data = load_data("MVC_processed.tsv")
-    print(data.head())
+    pass

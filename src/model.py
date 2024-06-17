@@ -14,8 +14,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import warnings
 from tqdm import tqdm
 import json
-from load_data import load_data
-from preprocessing import data_preprocessing
+from .load_data import load_data
+from .preprocessing import data_preprocessing
 
 warnings.filterwarnings('ignore')
 
@@ -62,7 +62,7 @@ class Model:
 
         return results
     
-    def session_cross_validation(self, *clf_list):
+    def leave_one_session_out_cross_validation(self, *clf_list):
         results = self.make_empty_results(5, clf_list)
         for session in range(1,6):
             train_x, train_y = self.take_x_y(self.data[self.data['session'] != session])
@@ -108,14 +108,4 @@ class Model:
         return self.data
 
 if __name__ == "__main__":
-    for stimuli in ["MVC", "SVC"]:
-        data = load_data(f"{stimuli}_processed.tsv")
-        data = data_preprocessing(data)
-        model = Model(data)
-        results = model.cross_validation(5, 'ZR', 'DT', 'KNN', 'NB', 'SVM', 'LR', 'AB', 'RF')
-        with open(f'{stimuli}_results.json', 'w') as f:
-            json.dump(results, f)
-
-        results = model.session_cross_validation('ZR', 'DT', 'KNN', 'NB', 'SVM', 'LR', 'AB', 'RF')
-        with open(f'{stimuli}_session_results.json', 'w') as f:
-            json.dump(results, f)
+    pass
