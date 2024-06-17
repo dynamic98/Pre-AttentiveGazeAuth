@@ -1,12 +1,23 @@
 # Pre-AttentiveGazeAuth
 
+### Index 
+- [1. Project Introduction](#1-project-introduction)
+- [2. Task and Gaze Stimuli](#2-task-and-gaze-stimuli)
+- [3. Data Collection Envs](#3-data-collection-envs)
+- [4. Collected Gaze Features](#4-collected-gaze-features)
+- [5. Dev Envs](#5-dev-envs)
+- [6. Understandig Dataset Structure](#6-understandig-dataset-structure)
+- [7. Codes for Analysis](#7-codes-for-analysis)
+
+
+---
 ### 1. Project Introduction 
 - category: `Security and Privacy` `Authentication` `Human-centered computing`
 - keywords: `Gaze` `Authentication` `Person Identification` `Pre-attentive processing` 
 - 🔗: [download link](https://drive.google.com/drive/folders/12H32y8S0DhlHZcCObwhHYpgGESu4KD1w?usp=sharing)
 
 ---
-### 2. Task & Gaze Stimuli
+### 2. Task and Gaze Stimuli
 <img width="800" alt="스크린샷 2024-06-17 오후 6 36 38" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/75048462-8a36-42fd-9f8c-a87e1b49dea9">
 
 
@@ -67,8 +78,8 @@
 Duration, dispersion, and count are extracted for each section
 
 ---
-### 5. Dev Envs <img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white"/>
-##### python version
+### 5. Dev Envs
+##### python version <img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white"/>
     python version = 3.10
 ##### install package
     pip install -r requirements.txt
