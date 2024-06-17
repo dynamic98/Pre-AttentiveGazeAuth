@@ -6,7 +6,7 @@
 - 🔗: [download link](https://drive.google.com/drive/folders/12H32y8S0DhlHZcCObwhHYpgGESu4KD1w?usp=sharing)
 
 ---
-### 2. Gaze Stimuli
+### 2. Task & Gaze Stimuli
 <img width="800" alt="스크린샷 2024-06-17 오후 6 36 38" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/75048462-8a36-42fd-9f8c-a87e1b49dea9">
 
 
@@ -74,7 +74,7 @@ Duration, dispersion, and count are extracted for each section
     python version = 3.10
 ##### install package
     pip install -r requirements.txt
-
+---
 
 ### 7. Understandig Dataset Structure
 ##### Directory
@@ -154,7 +154,7 @@ For level 0 in `LevelDictionary_SVC.json`:
 ---
 
 
-### Codes for Analysis 
+### 8. Codes for Analysis 
 1. Heatmap (code location: ___)
 2. Scanpath (code location: ___) 
 
