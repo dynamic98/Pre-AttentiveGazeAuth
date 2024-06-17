@@ -71,15 +71,7 @@ Duration, dispersion, and count are extracted for each section
 ##### install package
     pip install -r requirements.txt
 
-
-
-
-
-
-
-
-
-
+```bash
 Pre-AttentiveGazeAuth/
 ├── data/
 │   ├── MVC.tsv
@@ -110,3 +102,11 @@ Pre-AttentiveGazeAuth/
         ├── preattentive.py
         ├── stimuli.py
         └── util.py
+```
+
+
+
+
+
+
+
