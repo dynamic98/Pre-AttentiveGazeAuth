@@ -12,16 +12,16 @@
 
 ---
 ### 1. Project Introduction 
-- category: `Security and Privacy` `Authentication` `Human-centered computing`
-- keywords: `Gaze` `Authentication` `Person Identification` `Pre-attentive processing` 
-- data: [google drvie download🔗](https://drive.google.com/drive/folders/12H32y8S0DhlHZcCObwhHYpgGESu4KD1w?usp=sharing)
+- Category: `Security and Privacy` `Authentication` `Human-centered computing`
+- Keywords: `Gaze` `Authentication` `Person Identification` `Pre-attentive processing` 
+- Data: [google drvie download🔗](https://drive.google.com/drive/folders/12H32y8S0DhlHZcCObwhHYpgGESu4KD1w?usp=sharing)
 
 ---
 ### 2. Task and Gaze Stimuli
 <img width="800" alt="스크린샷 2024-06-17 오후 6 36 38" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/75048462-8a36-42fd-9f8c-a87e1b49dea9">
 
 
-- **a visual search task** where targets (black circles) and distractors (dashed circles) are arranged in a circular pattern. 
+- **A visual search task** where targets (black circles) and distractors (dashed circles) are arranged in a circular pattern. 
 - Each level has a specific arrangement of targets and distractors.
 
 ---
