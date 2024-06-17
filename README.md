@@ -70,3 +70,43 @@ Duration, dispersion, and count are extracted for each section
     python version = 3.10
 ##### install package
     pip install -r requirements.txt
+
+
+
+
+
+
+
+
+
+
+Pre-AttentiveGazeAuth/
+├── data/
+│   ├── MVC.tsv
+│   └── SVC.tsv
+├── LICENSE
+├── main.ipynb
+├── README.md
+├── requirements.txt
+└── src/
+    ├── __pycache__/
+    │   ├── download.cpython-310.pyc
+    │   ├── load_data.cpython-310.pyc
+    │   ├── ML_util.cpython-310.pyc
+    │   ├── model.cpython-310.pyc
+    │   └── preprocessing.cpython-310.pyc
+    ├── download.py
+    ├── load_data.py
+    ├── metric_revised.py
+    ├── ML_util.py
+    ├── model.py
+    ├── preprocessing.py
+    └── stimuli/
+        ├── __pycache__/
+        │   ├── preattentive.cpython-310.pyc
+        │   └── util.cpython-310.pyc
+        ├── LevelDictionary_MVC.json
+        ├── LevelDictionary_SVC.json
+        ├── preattentive.py
+        ├── stimuli.py
+        └── util.py
