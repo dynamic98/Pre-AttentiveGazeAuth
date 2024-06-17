@@ -15,7 +15,7 @@
 
 ---
 ### 3. Data Collection Envs
-<img width="800" alt="스크린샷 2024-06-17 오후 4 07 07" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/b8193ea3-65db-4011-a901-615a7ade6239">
+<img width="800" alt="스크린샷 2024-06-17 오후 4 07 07" src="https://g ithub.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/b8193ea3-65db-4011-a901-615a7ade6239">
 
 
 ---
@@ -60,23 +60,21 @@
  - Average pupil diameter: Average of left and right pupil diameter
 
 
----
-### 5. Additional Explanation for fixation and saccade  
-
+**Additional Explanation for fixation and saccade**
 <img width="800" alt="스크린샷 2024-06-17 오후 5 09 11" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/980e21ce-ebd8-4474-a09e-08e201e09a07">
 
 
 Duration, dispersion, and count are extracted for each section
 
 ---
-### 6. Dev Envs <img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white"/>
+### 5. Dev Envs <img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white"/>
 ##### python version
     python version = 3.10
 ##### install package
     pip install -r requirements.txt
 ---
 
-### 7. Understandig Dataset Structure
+### 6. Understandig Dataset Structure
 ##### Directory
 ```bash
 Pre-AttentiveGazeAuth/
@@ -154,7 +152,7 @@ For level 0 in `LevelDictionary_SVC.json`:
 ---
 
 
-### 8. Codes for Analysis 
+### 7. Codes for Analysis 
 1. Heatmap (code location: ___)
 2. Scanpath (code location: ___) 
 
