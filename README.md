@@ -18,7 +18,7 @@
 
 ---
 ### 2. Task and Gaze Stimuli
-<img width="800" alt="스크린샷 2024-06-17 오후 6 36 38" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/75048462-8a36-42fd-9f8c-a87e1b49dea9">
+<img width="800" alt="Task_and_Gaze_Stimuli" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/75048462-8a36-42fd-9f8c-a87e1b49dea9">
 
 
 - **A visual search task** where targets (black circles) and distractors (dashed circles) are arranged in a circular pattern. 
@@ -26,7 +26,7 @@
 
 ---
 ### 3. Data Collection Envs
-<img width="800" alt="스크린샷 2024-06-17 오후 4 07 07" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/99e41256-74f8-4690-a394-c927af37ab05">
+<img width="800" alt="Data_Collection_Envs" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/99e41256-74f8-4690-a394-c927af37ab05">
 
 
 ---
@@ -100,6 +100,9 @@ Pre-AttentiveGazeAuth/
 ├── requirements.txt
 └── src/
     ├── download.py
+    ├── draw_heatmap.ipynb
+    ├── draw_scanpath.ipynb
+    ├── gazeheatplot.ipynb
     ├── load_data.py
     ├── metric_revised.py
     ├── ML_util.py
@@ -166,9 +169,13 @@ For level 0 in `LevelDictionary_SVC.json`:
 
 
 ### 7. Codes for Analysis 
-1. Heatmap (code location: ___)
-2. Scanpath (code location: ___) 
+1. Heatmap (code location: ./src/draw_heatmap.ipynb)
+Example :
+<img width="400" alt="heatmap_img" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/f362e137-5c74-4c91-95a6-a1ecfc1f3874">   
 
+
+2. Scanpath (code location: ./src/draw_scanpath.ipynb) 
+<img width="800" alt="scanpath_img" src="https://github.com/dynamic98/Pre-AttentiveGazeAuth/assets/98831107/1c744162-40f5-4289-b706-b42461c27f49">
 
 
 
