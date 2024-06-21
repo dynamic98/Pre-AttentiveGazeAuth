@@ -1,7 +1,7 @@
 import itertools
 import numpy as np
 import math
-from sklearn.metrics import confusion_matrix, f1_score, accuracy_score, precision_score, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, f1_score, accuracy_score, precision_score, recall_score, ConfusionMatrixDisplay
 from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 from scipy.special import softmax
@@ -86,7 +86,7 @@ def stack_ydata_from_same_combinations(y_data, stack):
     return stack_index, stack_y
 
 def stack_ydata_from_stride(y_data, stack, samplesize=None):
-    # 연속한 3개 block을 쌓아 스택 샘플 구성
+    # sample construction by stacking n continuous blocks
     label_dict = {k:[] for k in list(set(y_data))}
     for index,label in enumerate(y_data):
         label_dict[label].append(index)
@@ -106,7 +106,7 @@ def stack_ydata_from_stride(y_data, stack, samplesize=None):
             else:
                 stack_index = np.vstack([stack_index, stacked])
 
-    # 스택한 샘플의 수가 설정한 샘플 사이즈보다 작은 경우, 랜덤하게 3개를 뽑아 스택을 추가
+    # if the number of stacked samples is less than the set sample size, randomly select n and add a stack
     
     stack_samplesize, _ = stack_index.shape    
     logger.info(f"stack_samplesize: {stack_samplesize}")
@@ -237,79 +237,32 @@ def stack_ydata_from_anything(y_data, index1, index2, index3):
     return stack_index, stack_y
 
 
-def latefusion(clf: RandomForestClassifier, x_data, stack_index:np.array, stack_y):
+def latefusion(clf, x_data, stack_index:np.array, stack_y):
     stack, total_stack_size = stack_index.shape
-    # plus_predict = []
     multiply_predict = []
-    # max_predict = []
+    # We actually tested plus and max fusion, but the result of multiply fusion was the best.
     probabilities = clf.predict_proba(x_data)
     yLabel = list(set(stack_y))
     fusion_proba = []
 
     for i in range(total_stack_size):
-        # probabilities = clf.predict_proba(x_data[stack_index[:,i]])
-        # plus = np.zeros((1,34))
         multiply = np.ones((1,len(yLabel)))
-        # maximum = [0 for _ in range(34)]
         for j in range(stack):
             this_probabilities = probabilities[stack_index[j,i]]
-            # plus = plus + np.array(this_probabilities)
             multiply = multiply * np.array(this_probabilities)
-            # maximum = list(map(max, maximum, this_probabilities))
-        # plus_predict.append(yLabel[np.argmax(plus)])
         multiply_predict.append(yLabel[np.argmax(multiply)])
         fusion_proba.append(multiply)
-        # max_predict.append(yLabel[np.argmax(maximum)])
 
-    # cm_plus = confusion_matrix(stack_y, plus_predict)
     cm_multiply = confusion_matrix(stack_y, multiply_predict)
-    # cm_max = confusion_matrix(stack_y, max_predict)
-
-    # acc_plus = accuracy_score(stack_y, plus_predict)
     acc_multiply = accuracy_score(stack_y, multiply_predict)
-    # acc_max = accuracy_score(stack_y, max_predict)
-
-    # precision_plus = precision_score(stack_y, plus_predict, average='macro')
-    precision_multiply = precision_score(stack_y, multiply_predict, average='macro')
-    # precision_max = precision_score(stack_y, max_predict, average='macro')
-
-    # f1_plus = f1_score(stack_y, plus_predict, average='macro')
-    f1_multiply = f1_score(stack_y, multiply_predict, average='macro')
-    # f1_max = f1_score(stack_y, max_predict, average='macro')
-
-    # results = {
-    #     'cm_plus':cm_plus, 'cm_multiply':cm_multiply, 'cm_max':cm_max,
-    #     'acc_plus':acc_plus, 'acc_multiply':acc_multiply, 'acc_max':acc_max,
-    #     'precision_plus':precision_plus, 'precision_multiply':precision_multiply, 'precision_max':precision_max,
-    #     'f1_plus':f1_plus, 'f1_multiply':f1_multiply, 'f1_max':f1_max
-    # }
+    recall_multiply = recall_score(stack_y, multiply_predict, average='weighted')
+    precision_multiply = precision_score(stack_y, multiply_predict, average='weighted')
+    f1_multiply = f1_score(stack_y, multiply_predict, average='weighted')
 
     results = {'cm_multiply':cm_multiply,'acc_multiply': acc_multiply,'precision_multiply':precision_multiply, 
-                'f1_multiply': f1_multiply, 'multiply_proba':fusion_proba}
+                'recall_multiply':recall_multiply,'f1_multiply': f1_multiply, 'multiply_proba':fusion_proba}
 
     return results
-
-def latefusionVerification(clf: RandomForestClassifier, x_data, stack_index:np.array, stack_y, targetY):
-    stack, total_stack_size = stack_index.shape
-    binary_true = []
-    binary_score = []
-    probabilities = clf.predict_proba(x_data)
-    yLabel = list(set(stack_y))
-
-    for i in range(total_stack_size):
-        # probabilities = clf.predict_proba(x_data[stack_index[:,i]])
-        multiply = np.ones((1,13))
-        for j in range(stack):
-            this_probabilities = probabilities[stack_index[j,i]]
-            multiply = multiply * np.array(this_probabilities)
-        multiply_predict_prob = softmax(multiply[0])
-        binary_score.append(multiply_predict_prob[targetY])
-        if stack_y[i] == targetY:
-            binary_true.append(1)
-        else:
-            binary_true.append(0)
-
-    return binary_true, binary_score
 
 def visualize_cm(cm, clf_name:str, title:str, path='', iv=False):
     length_cm = cm.shape[0]

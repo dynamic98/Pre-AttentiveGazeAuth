@@ -15,7 +15,8 @@ import warnings
 from tqdm import tqdm
 import json
 from .load_data import load_data
-from .preprocessing import data_preprocessing
+from .preprocessing import z_score_normalization
+from .ML_util import stack_ydata_from_stride, latefusion
 
 warnings.filterwarnings('ignore')
 
@@ -26,7 +27,7 @@ class Model:
         self.DT = DecisionTreeClassifier(random_state=0) # Decision Tree
         self.KNN = KNeighborsClassifier() # K-Nearest Neighbors
         self.NB = GaussianNB() # Naive Bayes
-        self.SVM = SVC(random_state=0) # Support Vector Machine
+        self.SVM = SVC(random_state=0, probability=True) # Support Vector Machine
         self.LR = LogisticRegression(random_state=0) # Logistic Regression
         self.AB = AdaBoostClassifier(random_state=0) # AdaBoost
         self.RF = RandomForestClassifier(random_state=0) # Random Forest
@@ -37,53 +38,41 @@ class Model:
         self.x_domain_exclude = ['participant', 'session', 'stimuli_index']
         self.data = data
         
-        
-    def cross_validation(self, cv=5, *clf_list):
-        # cv is the number of folds
-        # clf_list is a list of classifier names to be used
-        # clf_list should be consisted of the names in self.clf_names (e.g. 'ZR', 'DT', 'KNN', 'NB', 'SVM', 'LR', 'AB', 'RF')
-        kf = StratifiedKFold(n_splits=cv)
-        x_data, y_data = self.take_x_y()
-        x_data = x_data.to_numpy()
-        y_data = y_data.to_numpy()
-        
-        results = self.make_empty_results(cv, clf_list)
-        
-        for i, (train, test) in enumerate(kf.split(x_data, y_data)):
-            print(f'Fold {i+1} is in progress...')
-            for clf_name in tqdm(clf_list):
-                clf = clone(self.clf_names_dict[clf_name])
-                clf.fit(x_data[train], y_data[train])
-                predictions = clf.predict(x_data[test])
-                results[clf_name][f'{i+1}']['accuracy'].append(accuracy_score(y_data[test], predictions))
-                results[clf_name][f'{i+1}']['precision'].append(precision_score(y_data[test], predictions, average='weighted'))
-                results[clf_name][f'{i+1}']['recall'].append(recall_score(y_data[test], predictions, average='weighted'))
-                results[clf_name][f'{i+1}']['f1'].append(f1_score(y_data[test], predictions, average='weighted'))
-
-        return results
-    
-    def leave_one_session_out_cross_validation(self, *clf_list):
-        results = self.make_empty_results(5, clf_list)
+            
+    def leave_one_session_out_cross_validation(self, stack, *clf_list):
+        results = self.make_empty_results(stack, 5, clf_list)
         for session in range(1,6):
             train_x, train_y = self.take_x_y(self.data[self.data['session'] != session])
             test_x, test_y = self.take_x_y(self.data[self.data['session'] == session])
-            train_x = train_x.to_numpy()
+            normalized_train_x, mean_std = z_score_normalization(train_x)
+            normalized_test_x, _ = z_score_normalization(test_x, mean_std)
+            train_x = normalized_train_x.to_numpy()
             train_y = train_y.to_numpy()
-            test_x = test_x.to_numpy()
+            test_x = normalized_test_x.to_numpy()
             test_y = test_y.to_numpy()
             print(f'Session {session} is in progress...')
             for clf_name in tqdm(clf_list):
                 clf = clone(self.clf_names_dict[clf_name])
                 clf.fit(train_x, train_y)
-                predictions = clf.predict(test_x)
-                results[clf_name][f'{session}']['accuracy'].append(accuracy_score(test_y, predictions))
-                results[clf_name][f'{session}']['precision'].append(precision_score(test_y, predictions, average='weighted'))
-                results[clf_name][f'{session}']['recall'].append(recall_score(test_y, predictions, average='weighted'))
-                results[clf_name][f'{session}']['f1'].append(f1_score(test_y, predictions, average='weighted'))
+                if stack == 1:
+                    predictions = clf.predict(test_x)
+                    results[clf_name][f'{session}']['accuracy'].append(accuracy_score(test_y, predictions))
+                    results[clf_name][f'{session}']['precision'].append(precision_score(test_y, predictions, average='weighted'))
+                    results[clf_name][f'{session}']['recall'].append(recall_score(test_y, predictions, average='weighted'))
+                    results[clf_name][f'{session}']['f1'].append(f1_score(test_y, predictions, average='weighted'))
+                elif stack > 1:
+                    sample_size = len(test_y)
+                    stack_index, stack_y = stack_ydata_from_stride(test_y, stack, sample_size)
+                    latefusion_results = latefusion(clf, test_x, stack_index, stack_y)
+                    results[clf_name][f'{session}']['accuracy'].append(latefusion_results['acc_multiply'])
+                    results[clf_name][f'{session}']['precision'].append(latefusion_results['precision_multiply'])
+                    results[clf_name][f'{session}']['recall'].append(latefusion_results['recall_multiply'])
+                    results[clf_name][f'{session}']['f1'].append(latefusion_results['f1_multiply'])
         return results
     
-    def make_empty_results(self, cv, clf_list):
+    def make_empty_results(self, stack, cv, clf_list):
         results = {}
+        results['stack'] = stack
         for clf_name in clf_list:
             results[clf_name] = {}
             for i in range(cv):

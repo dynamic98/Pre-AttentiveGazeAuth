@@ -8,7 +8,7 @@ data_file_path = os.path.join(os.path.dirname(os.path.abspath(os.path.dirname(__
 def load_data(file_name: str):
     data = pd.read_csv(os.path.join(data_file_path, file_name), sep='\t')
     serial_columns = ['x', 'y', 'velocity', 'angle', 'mfcc', 'left_pupil', 'right_pupil',
-        'avg_pupil', 'eyetype', 'fixation_duration', 'fixation_dispersion',
+        'filtered_pupil', 'eye_type', 'fixation_duration', 'fixation_dispersion',
         'saccade_duration', 'saccade_dispersion', 'saccade_velocity',
         'saccade_amplitude']
     for column in serial_columns:
